@@ -127,9 +127,10 @@ left:0
  
 @media screen and (min-width:760px){
     #app{
-        width: 1200px;
-        margin: auto;
-    }
+         width:100%;
+         max-width: 1200px;
+         margin: auto;
+     }
 
    .menu_btn{
        display: none;
@@ -168,7 +169,6 @@ left:0
 <body>
    <div id="app">
        <input type="checkbox" id="menu_control">
- 
        <div class="header">
            <label for="menu_control" class="menu_btn"> <span>選單</span> </label>
            <nav>
@@ -187,7 +187,7 @@ left:0
                查詢日期範圍：<input type="date">~<input type="date"> (僅查詢)
            </div>
            <div>
-               指定日期輸入：<input type="date"><button>查詢輸入</button>(可登打修改)
+               指定日期輸入：<input type="date" id="assignDate"><button>查詢輸入</button>(可登打修改)
            </div>
            <div class="line"></div>
  
@@ -201,7 +201,7 @@ left:0
                    </tr>
                </thead>
                <tbody>
-                   <tr v-for="item of lists">
+                   <tr v-for="item of AssignList">
                        <td>{{item.name}}</td>
                        <td>{{item.food1}}</td>
                        <td>{{item.food2}}</td>
@@ -226,22 +226,46 @@ left:0
    name:"李政翰",
    food1:"排骨便當",
    food2:"珍珠奶茶",
-   date:new Date().getFullYear()+"/"+(new Date().getMonth()+1)+"/"+new Date().getDate(),
+   date:'2022-02-16',
 },
 {
    name:"吳彥達",
    food1:"鰻魚便當",
    food2:"綠茶",
-   date:new Date().getFullYear()+"/"+(new Date().getMonth()+1)+"/"+new Date().getDate(),
+   date:'2022-02-15',
 },
 {
    name:"王大明",
    food1:"雞腿便當",
    food2:"西瓜牛奶",
-   date:new Date().getFullYear()+"/"+(new Date().getMonth()+1)+"/"+new Date().getDate(),
+   date:'2022-02-16',
 }
                    ]
                }
+           },
+           computed:{
+                AssignList:function ()
+               {
+                   
+                    let assignedDate=document.getElementById("assignDate").value
+                    return this.lists.filter(element => {
+                        return element.date==assignedDate 
+                
+                   });
+               },
+           },
+           created(){
+                var today = new Date();
+                var yyyy = today.getFullYear();
+                var mm = today.getMonth()+1; //January is 0!
+                var dd = today.getDate();
+
+                if(dd<10){dd='0'+dd} 
+                if(mm<10){mm='0'+mm} 
+                today = yyyy+'-'+mm+'-'+dd;
+
+                document.getElementById("assignDate").value=today;
+                console.log("dsdf")
            },
            mounted(){
                // import json from './json/data.json';
@@ -254,6 +278,17 @@ left:0
                // }
                // console.log("aaa"+this.lists)
                // this.lists.pop();
+                var today = new Date();
+                var yyyy = today.getFullYear();
+                var mm = today.getMonth()+1; //January is 0!
+                var dd = today.getDate();
+
+                if(dd<10){dd='0'+dd} 
+                if(mm<10){mm='0'+mm} 
+                today = yyyy+'-'+mm+'-'+dd;
+
+                document.getElementById("assignDate").value=today;
+
            }
        })
    </script>

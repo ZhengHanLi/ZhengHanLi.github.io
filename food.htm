@@ -5,34 +5,61 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+ 
     <style>
         *{
             margin: 0;
             padding: 0;
             list-style: none;
         }
- 
-        #app{
-            width:100%;
-            max-width: 1200px;
+  
+        #app .container div{
+            margin: 10px
         }
-       
-        #app .container{
-            width: 600px;
-            margin: auto;
- 
+        .line {
+            border: 1px black solid ;
         }
- 
- 
- 
- 
+  
+  
+        table{
+            width: 100%;
+            /* border: 1px black solid; */
+        }
+  
+        table td{
+            border: 1px black solid;
+        }
+  
+        table thead tr{
+            text-align: center;
+            background-color: #A59FA9;
+        }
+  
+        table td:nth-child(1){
+            width: 100px;
+        }
+  
+        table td:nth-child(2){
+            width: calc(50% - 100px);
+        }
+  
+        table td:nth-child(3){
+            width: calc(50% - 100px);
+        }
+        table td:nth-child(4){
+            width: 100px;
+        }
+  
+        table tbody tr:nth-child(even){
+            background-color: #ECE5ED;
+        }
+  
  .header{
-    max-width: 1200px;
     height:50px;
     background-color: #ccc;
     position: relative;
  }
- 
+  
  .menu_btn{
     width: 40px;
     height: 40px;
@@ -41,9 +68,9 @@
     right: 10px;
     top:5px;
     position: absolute;
- 
+  
  }
- 
+  
  .menu_btn span  {
     opacity: 0;
     overflow: hidden;
@@ -51,7 +78,7 @@
     width: 1px;
     height: 1px;
  }
- 
+  
  .menu_btn::before  {
     content: '|';
     position: absolute;
@@ -64,7 +91,7 @@
     margin: auto;
     box-shadow: 0px 8px 0px #aaa,0px -8px 0px #aaa;
  }
- 
+  
  nav{
     width: 80%;
     height: calc(100vh - 50px);
@@ -74,44 +101,83 @@
     background-color: #282923;
     transition: 0.4s;
  }
- 
+  
  nav a{
     display: block;
     padding: 18px 10px;
     text-decoration: none;
     color:#a6e22c;
     border-bottom: 1px solid #a6e22c
- 
+  
  }
- 
+  
  nav a:hover{
     background-color: rgb(107, 107, 107);
  }
- 
- 
+  
+  
  #menu_control{
     position: absolute;
     display: none;
  }
- 
+  
  #menu_control:checked ~ .header nav{
  left:0
  }
- 
- 
- 
+  
+ ul li{
+     background: linear-gradient(90deg, rgba(114, 110, 110, 0.8), rgba(255, 0, 170, 0) 70.71%);
+     margin: 10px;
+ }
+
+ #app .container ul li div{
+         display: inline-block;
+         width: 100%;
+     }
+
+     #app .container ul li div span {
+        display: inline-block;
+         width: 150px;
+     }
  @media screen and (min-width:760px){
+     #app{
+         width:100%;
+         max-width: 1200px;
+         margin: auto;
+     }
+
+     #app .container .add-btn{
+         width: 50%;
+         margin: auto;
+     }
+
+     #app .container .content{
+         width: 80%;
+         margin: auto;
+     }
+
+     #app .container ul li div{
+         display: inline-block;
+         width: 100%;
+     }
+
+     #app .container ul li div span {
+        display: inline-block;
+         width: 300px;
+     }
+ 
     .menu_btn{
         display: none;
     }
- 
+  
     .header{
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: gry;
+        background-color: gray;
+        margin-bottom: 20px;
     }
- 
+  
     nav{
         position: relative;
         left:0px;
@@ -121,65 +187,55 @@
         top:0;
         background-color: transparent;
     }
- 
+  
     nav a{
         border-bottom: none;
         color:black;
         /* color:#000; */
     }
- 
+  
     nav a:hover{
         background-color: rgb(107, 107, 107);
     }
- 
-    li div{
-        display: inline-block;
-        width: 500px;
-    }
- 
-    li div span{
-        display: inline-block;
-        width: 200px;
-    }
  }
-   
+  
     </style>
 </head>
 <body>
-    <input type="checkbox" id="menu_control">
- 
-    <div class="header">
-        <label for="menu_control" class="menu_btn"> <span>選單</span> </label>
-        <nav>
-            <a href="order.htm">RD點餐</a>
-            <a href="#">RD設定餐點</a>
-            <a href="#">PM點餐</a>
-            <a href="#">PM設定餐點</a>
-            <a href="food.htm">食物設定</a>
-            <a href="users.htm">人員設定</a>
-        </nav>
- 
-    </div>
- 
     <div id="app">
+        <input type="checkbox" id="menu_control">
+    
+        <div class="header">
+            <label for="menu_control" class="menu_btn"> <span>選單</span> </label>
+            <nav>
+                <a href="order.htm">RD點餐</a>
+                <a href="#">RD設定餐點</a>
+                <a href="#">PM點餐</a>
+                <a href="#">PM設定餐點</a>
+                <a href="food.htm">食物設定</a>
+                <a href="users.htm">人員設定</a>
+            </nav>
+    
+        </div>
+
         <div class="container">
- 
- 
-            <div>
+
+            <div class="add-btn">
                 <input type="text" placeholder="餐點名稱" v-model.trim="food">
                 <input type="text" placeholder="網址" v-model.trim="url" >  
                 <button @click="addList()">新增</button>    
             </div>
-            <div>
+            <div class="content">
                 <ul>
                     <li v-for="item of lists">
                         <template v-if="editItem==null">
                             <div>
                                 <span>{{item.foodName}}</span>
-                                <span>{{item.foodUrl}}</span>      
+                                <span>{{item.foodUrl}}</span>     
+                                <button>刪除</button>
+                                <button @click="editHandler(item)">修改</button> 
                             </div>
-                        <button>刪除</button>
-                        <button @click="editHandler(item)">修改</button>
+
                         </template>
                         <template v-else-if="editItem!=item">
                             <div>
@@ -191,17 +247,18 @@
                             <div>
                                 <input type="text" v-model="editFood">
                                 <input type="text" v-model="editUrl">
+                                <button @click="completeHandler(item)">完成</button>
+                                <button @click="cancelHandler()">取消</button>
                             </div>
-                        <button @click="completeHandler(item)">完成</button>
-                        <button @click="cancelHandler()">取消</button>
+
                         </template>
- 
+
                     </li>
                 </ul>
             </div>
         </div>
-    </div>
- 
+    
+    </div>  
     <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js' integrity='sha512-pSyYzOKCLD2xoGM1GwkeHbdXgMRVsSqQaaUoHskx/HF09POwvow2VfVEdARIYwdeFLbu+2FCOTRYuiyeGxXkEg==' crossorigin='anonymous'></script>
     <script>
        
