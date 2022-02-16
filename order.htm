@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Document</title>
+ 
+   <style>
+       *{
+           margin: 0;
+           padding: 0;
+           list-style: none;
+       }
+ 
+       #app .container div{
+           margin: 10px
+       }
+       .line {
+           border: 1px black solid ;
+       }
+ 
+ 
+       table{
+           width: 100%;
+           /* border: 1px black solid; */
+       }
+ 
+       table td{
+           border: 1px black solid;
+       }
+ 
+       table thead tr{
+           text-align: center;
+           background-color: #A59FA9;
+       }
+ 
+       table td:nth-child(1){
+           width: 100px;
+       }
+ 
+       table td:nth-child(2){
+           width: calc(50% - 100px);
+       }
+ 
+       table td:nth-child(3){
+           width: calc(50% - 100px);
+       }
+       table td:nth-child(4){
+           width: 100px;
+       }
+ 
+       table tbody tr:nth-child(even){
+           background-color: #ECE5ED;
+       }
+ 
+.header{
+   height:50px;
+   background-color: #ccc;
+   position: relative;
+}
+ 
+.menu_btn{
+   width: 40px;
+   height: 40px;
+   background-color: #000;
+   display: inline-block;
+   right: 10px;
+   top:5px;
+   position: absolute;
+ 
+}
+ 
+.menu_btn span  {
+   opacity: 0;
+   overflow: hidden;
+   display: block;
+   width: 1px;
+   height: 1px;
+}
+ 
+.menu_btn::before  {
+   content: '|';
+   position: absolute;
+   height: 2px;
+   left: 2px;
+   width: 36px;
+   background-color: #aaa;
+   top:0;
+   bottom: 0;
+   margin: auto;
+   box-shadow: 0px 8px 0px #aaa,0px -8px 0px #aaa;
+}
+ 
+nav{
+   width: 80%;
+   height: calc(100vh - 50px);
+   position: absolute;
+   top:50px;
+   left:-100%;
+   background-color: #282923;
+   transition: 0.4s;
+}
+ 
+nav a{
+   display: block;
+   padding: 18px 10px;
+   text-decoration: none;
+   color:#a6e22c;
+   border-bottom: 1px solid #a6e22c
+ 
+}
+ 
+nav a:hover{
+   background-color: rgb(107, 107, 107);
+}
+ 
+ 
+#menu_control{
+   position: absolute;
+   display: none;
+}
+ 
+#menu_control:checked ~ .header nav{
+left:0
+}
+ 
+@media screen and (min-width:760px){
+   .menu_btn{
+       display: none;
+   }
+ 
+   .header{
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       background-color: gry;
+   }
+ 
+   nav{
+       position: relative;
+       left:0px;
+       height: 50px;
+       display: flex;
+       left:0;
+       top:0;
+       background-color: transparent;
+   }
+ 
+   nav a{
+       border-bottom: none;
+       color:black;
+       /* color:#000; */
+   }
+ 
+   nav a:hover{
+       background-color: rgb(107, 107, 107);
+   }
+}
+ 
+   </style>
+</head>
+<body>
+   <div id="app">
+       <input type="checkbox" id="menu_control">
+ 
+       <div class="header">
+           <label for="menu_control" class="menu_btn"> <span>選單</span> </label>
+           <nav>
+                <a href="order.htm">RD點餐</a>
+                <a href="#">RD設定餐點</a>
+                <a href="#">PM點餐</a>
+                <a href="#">PM設定餐點</a>
+                <a href="food.htm">食物設定</a>
+                <a href="users.htm">人員設定</a>
+           </nav>
+ 
+       </div>
+       <div class="container">
+ 
+ 
+           <h3>【點餐介面】<button>檢視資料</button> </h3>
+           <div>
+               查詢日期範圍：<input type="date">~<input type="date"> (僅查詢)
+           </div>
+           <div>
+               指定日期輸入：<input type="date"><button>查詢輸入</button>(可登打修改)
+           </div>
+           <div class="line"></div>
+ 
+           <table>
+               <thead>
+                   <tr>
+                       <td>姓名</td>
+                       <td>食物1</td>
+                       <td>食物2</td>
+                       <td>點餐日期</td>
+                   </tr>
+               </thead>
+               <tbody>
+                   <tr v-for="item of lists">
+                       <td>{{item.name}}</td>
+                       <td>{{item.food1}}</td>
+                       <td>{{item.food2}}</td>
+                       <td>{{item.date}}</td>
+                   </tr>
+               </tbody>
+           </table>
+       </div>
+   </div>
+ 
+ 
+   <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js' integrity='sha512-pSyYzOKCLD2xoGM1GwkeHbdXgMRVsSqQaaUoHskx/HF09POwvow2VfVEdARIYwdeFLbu+2FCOTRYuiyeGxXkEg==' crossorigin='anonymous'></script>
+   <script>
+     
+       let vm=new Vue({
+           el:"#app",
+           data(){
+               return{
+                   lists:[
+ 
+{
+   name:"李政翰",
+   food1:"排骨便當",
+   food2:"珍珠奶茶",
+   date:new Date().getFullYear()+"/"+(new Date().getMonth()+1)+"/"+new Date().getDate(),
+},
+{
+   name:"吳彥達",
+   food1:"鰻魚便當",
+   food2:"綠茶",
+   date:new Date().getFullYear()+"/"+(new Date().getMonth()+1)+"/"+new Date().getDate(),
+},
+{
+   name:"王大明",
+   food1:"雞腿便當",
+   food2:"西瓜牛奶",
+   date:new Date().getFullYear()+"/"+(new Date().getMonth()+1)+"/"+new Date().getDate(),
+}
+                   ]
+               }
+           },
+           mounted(){
+               // import json from './json/data.json';
+               // export default{
+               //     data(){
+               //         return{
+               //             lists: json
+               //         }
+               //     }
+               // }
+               // console.log("aaa"+this.lists)
+               // this.lists.pop();
+           }
+       })
+   </script>
+</body>
+</html>
+ 
+ 
+ 
+
