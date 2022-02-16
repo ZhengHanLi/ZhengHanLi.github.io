@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+ 
+        #app{
+            width:100%;
+            max-width: 1200px;
+        }
+       
+        #app .container{
+            width: 600px;
+            margin: auto;
+ 
+        }
+ 
+ 
+ 
+ 
+ .header{
+    max-width: 1200px;
+    height:50px;
+    background-color: #ccc;
+    position: relative;
+ }
+ 
+ .menu_btn{
+    width: 40px;
+    height: 40px;
+    background-color: #000;
+    display: inline-block;
+    right: 10px;
+    top:5px;
+    position: absolute;
+ 
+ }
+ 
+ .menu_btn span  {
+    opacity: 0;
+    overflow: hidden;
+    display: block;
+    width: 1px;
+    height: 1px;
+ }
+ 
+ .menu_btn::before  {
+    content: '|';
+    position: absolute;
+    height: 2px;
+    left: 2px;
+    width: 36px;
+    background-color: #aaa;
+    top:0;
+    bottom: 0;
+    margin: auto;
+    box-shadow: 0px 8px 0px #aaa,0px -8px 0px #aaa;
+ }
+ 
+ nav{
+    width: 80%;
+    height: calc(100vh - 50px);
+    position: absolute;
+    top:50px;
+    left:-100%;
+    background-color: #282923;
+    transition: 0.4s;
+ }
+ 
+ nav a{
+    display: block;
+    padding: 18px 10px;
+    text-decoration: none;
+    color:#a6e22c;
+    border-bottom: 1px solid #a6e22c
+ 
+ }
+ 
+ nav a:hover{
+    background-color: rgb(107, 107, 107);
+ }
+ 
+ 
+ #menu_control{
+    position: absolute;
+    display: none;
+ }
+ 
+ #menu_control:checked ~ .header nav{
+ left:0
+ }
+ 
+ 
+ 
+ @media screen and (min-width:760px){
+    .menu_btn{
+        display: none;
+    }
+ 
+    .header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: gry;
+    }
+ 
+    nav{
+        position: relative;
+        left:0px;
+        height: 50px;
+        display: flex;
+        left:0;
+        top:0;
+        background-color: transparent;
+    }
+ 
+    nav a{
+        border-bottom: none;
+        color:black;
+        /* color:#000; */
+    }
+ 
+    nav a:hover{
+        background-color: rgb(107, 107, 107);
+    }
+ 
+    li div{
+        display: inline-block;
+        width: 500px;
+    }
+ 
+    li div span{
+        display: inline-block;
+        width: 200px;
+    }
+ }
+   
+    </style>
+</head>
+<body>
+    <input type="checkbox" id="menu_control">
+ 
+    <div class="header">
+        <label for="menu_control" class="menu_btn"> <span>選單</span> </label>
+        <nav>
+            <a href="order.htm">RD點餐</a>
+            <a href="#">RD設定餐點</a>
+            <a href="#">PM點餐</a>
+            <a href="#">PM設定餐點</a>
+            <a href="food.htm">食物設定</a>
+            <a href="users.htm">人員設定</a>
+        </nav>
+ 
+    </div>
+ 
+    <div id="app">
+        <div class="container">
+ 
+ 
+            <div>
+                <input type="text" placeholder="餐點名稱" v-model.trim="food">
+                <input type="text" placeholder="網址" v-model.trim="url" >  
+                <button @click="addList()">新增</button>    
+            </div>
+            <div>
+                <ul>
+                    <li v-for="item of lists">
+                        <template v-if="editItem==null">
+                            <div>
+                                <span>{{item.foodName}}</span>
+                                <span>{{item.foodUrl}}</span>      
+                            </div>
+                        <button>刪除</button>
+                        <button @click="editHandler(item)">修改</button>
+                        </template>
+                        <template v-else-if="editItem!=item">
+                            <div>
+                                <span>{{item.foodName}}</span>
+                                <span>{{item.foodUrl}}</span>      
+                            </div>
+                        </template>
+                        <template v-else>
+                            <div>
+                                <input type="text" v-model="editFood">
+                                <input type="text" v-model="editUrl">
+                            </div>
+                        <button @click="completeHandler(item)">完成</button>
+                        <button @click="cancelHandler()">取消</button>
+                        </template>
+ 
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+ 
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js' integrity='sha512-pSyYzOKCLD2xoGM1GwkeHbdXgMRVsSqQaaUoHskx/HF09POwvow2VfVEdARIYwdeFLbu+2FCOTRYuiyeGxXkEg==' crossorigin='anonymous'></script>
+    <script>
+       
+        /*
+        50嵐
+        http://50lan.com/web/products.asp
+        */
+        ;(function (){
+            new Vue({
+                el:"#app",
+                data(){
+                    return {
+                        food:"",
+                        url:"",
+                        lists:[],
+ 
+                        editItem:null,
+                        editFood:"",
+                        editUrl:"",
+                    }
+                },
+                methods:{
+                    addList : function ()
+                    {
+                        if(!this.food||!this.url )
+                            return false;
+                        this.lists.push(
+                            {
+                                "foodName":this.food,
+                                "foodUrl":this.url
+                            }
+                        )
+                    },  
+ 
+                    editHandler:function(item){
+                        this.editItem=item;
+                        this.editFood=item.foodName
+                        this.editUrl=item.foodUrl
+                    },
+ 
+                    completeHandler:function(item)
+                    {
+                        item.foodName=this.editFood
+                        item.foodUrl=this.editUrl
+                        this.editItem=null
+                        this.editFood=""
+                        this.editUrl=""
+                    },
+                   
+                    cancelHandler:function()
+                    {
+                        this.editItem=null
+                        this.editFood=""
+                        this.editUrl=""
+                    }
+                   
+                   
+                }
+            })
+        }())
+ 
+    </script>
+</body>
+</html>
+

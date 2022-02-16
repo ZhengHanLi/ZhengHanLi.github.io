@@ -126,6 +126,11 @@ left:0
 }
  
 @media screen and (min-width:760px){
+    #app{
+        width: 1200px;
+        margin: auto;
+    }
+
    .menu_btn{
        display: none;
    }
@@ -162,7 +167,6 @@ left:0
 </head>
 <body>
    <div id="app">
-       123123123
        <input type="checkbox" id="menu_control">
  
        <div class="header">
@@ -178,8 +182,6 @@ left:0
  
        </div>
        <div class="container">
- 
- 
            <h3>【點餐介面】<button>檢視資料</button> </h3>
            <div>
                查詢日期範圍：<input type="date">~<input type="date"> (僅查詢)
@@ -192,10 +194,10 @@ left:0
            <table>
                <thead>
                    <tr>
-                       <td>姓名</td>
-                       <td>食物1</td>
-                       <td>食物2</td>
-                       <td>點餐日期</td>
+                       <th>姓名</th>
+                       <th>食物1</th>
+                       <th>食物2</th>
+                       <th>點餐日期</th>
                    </tr>
                </thead>
                <tbody>
