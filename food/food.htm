@@ -121,7 +121,7 @@
     display: none;
  }
   
- #menu_control:checked ~ .header nav{
+ #menu_control:checked + nav{
  left:0
  }
   
@@ -203,63 +203,16 @@
 </head>
 <body>
     <div id="app">
-        <input type="checkbox" id="menu_control">
-    
-        <div class="header">
-            <label for="menu_control" class="menu_btn"> <span>選單</span> </label>
-            <nav>
-                <a href="order.htm">RD點餐</a>
-                <a href="#">RD設定餐點</a>
-                <a href="#">PM點餐</a>
-                <a href="#">PM設定餐點</a>
-                <a href="food.htm">食物設定</a>
-                <a href="users.htm">人員設定</a>
-            </nav>
-    
-        </div>
-
         <div class="container">
-
-            <div class="add-btn">
-                <input type="text" placeholder="餐點名稱" v-model.trim="food">
-                <input type="text" placeholder="網址" v-model.trim="url" >  
-                <button @click="addList()">新增</button>    
-            </div>
-            <div class="content">
-                <ul>
-                    <li v-for="item of lists">
-                        <template v-if="editItem==null">
-                            <div>
-                                <span>{{item.foodName}}</span>
-                                <span>{{item.foodUrl}}</span>     
-                                <button>刪除</button>
-                                <button @click="editHandler(item)">修改</button> 
-                            </div>
-
-                        </template>
-                        <template v-else-if="editItem!=item">
-                            <div>
-                                <span>{{item.foodName}}</span>
-                                <span>{{item.foodUrl}}</span>      
-                            </div>
-                        </template>
-                        <template v-else>
-                            <div>
-                                <input type="text" v-model="editFood">
-                                <input type="text" v-model="editUrl">
-                                <button @click="completeHandler(item)">完成</button>
-                                <button @click="cancelHandler()">取消</button>
-                            </div>
-
-                        </template>
-
-                    </li>
-                </ul>
-            </div>
+            <nav-component></nav-component>
+            <food-input-component @addlist="addListInfo"></food-input-component>
+            <content-component :lists="lists" @updateInfo="updateListInfo"></content-component>
         </div>
-    
     </div>  
     <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js' integrity='sha512-pSyYzOKCLD2xoGM1GwkeHbdXgMRVsSqQaaUoHskx/HF09POwvow2VfVEdARIYwdeFLbu+2FCOTRYuiyeGxXkEg==' crossorigin='anonymous'></script>
+    <script src="nav-component.js"></script>
+    <script src="food-input-component.js"></script>
+    <script src="content-component.js"></script>
     <script>
        
         /*
@@ -271,49 +224,34 @@
                 el:"#app",
                 data(){
                     return {
-                        food:"",
-                        url:"",
                         lists:[],
- 
-                        editItem:null,
-                        editFood:"",
-                        editUrl:"",
+
                     }
                 },
                 methods:{
-                    addList : function ()
+                    addListInfo : function (val)
                     {
-                        if(!this.food||!this.url )
-                            return false;
                         this.lists.push(
                             {
-                                "foodName":this.food,
-                                "foodUrl":this.url
+                                "foodName":val.foodName,
+                                "foodUrl":val.foodUrl
                             }
                         )
                     },  
- 
-                    editHandler:function(item){
-                        this.editItem=item;
-                        this.editFood=item.foodName
-                        this.editUrl=item.foodUrl
-                    },
- 
-                    completeHandler:function(item)
+                    updateListInfo : function (val)
                     {
-                        item.foodName=this.editFood
-                        item.foodUrl=this.editUrl
-                        this.editItem=null
-                        this.editFood=""
-                        this.editUrl=""
-                    },
+                        this.lists.push(
+                            {
+                                "foodName":val.foodName,
+                                "foodUrl":val.foodUrl
+                            }
+                        )
+                    },  
+
+ 
+
                    
-                    cancelHandler:function()
-                    {
-                        this.editItem=null
-                        this.editFood=""
-                        this.editUrl=""
-                    }
+
                    
                    
                 }
