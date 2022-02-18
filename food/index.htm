@@ -15,10 +15,10 @@
 
             <div v-if="show==='order'">
                 <order-input-component @search-infor="searchHandler"></order-input-component>
-                <show-component :relist="relist"></show-component>
+                <order-content-component :relist="relist"></order-content-component>
             </div>
             <div v-else-if="show==='set'">
-                ad123
+                <setfood-input-component @setfood-infor="setfoodHandler"  :foodlist="foodList"></setfood-input-component>
             </div>
             <div v-else-if="show==='food-setting'">
                 <food-input-component @addlist="addListInfo"></food-input-component>
@@ -38,11 +38,13 @@
    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js' integrity='sha512-pSyYzOKCLD2xoGM1GwkeHbdXgMRVsSqQaaUoHskx/HF09POwvow2VfVEdARIYwdeFLbu+2FCOTRYuiyeGxXkEg==' crossorigin='anonymous'></script>
    <script src="js/nav-component.js"></script>
    <script src="js/order-input-component.js" ></script>
-   <script src="js/show-component.js" ></script>
+   <script src="js/order-content-component.js" ></script>
    <script src="js/food-input-component.js"></script>
    <script src="js/food-setting-content-component.js"></script>
    <script src="js/users-input-component.js"></script>
    <script src="js/users-setting-content-component.js"></script>
+
+   <script src="js/setfood-input-component.js"></script>
    <script>
      
        let vm=new Vue({
@@ -54,29 +56,60 @@
                     foodList:[],
                     userList:[],
                     lists:[
- 
-{
-   name:"李政翰",
-   food1:"排骨便當",
-   food2:"珍珠奶茶",
-   date:'2022-02-16',
-},
-{
-   name:"吳彥達",
-   food1:"鰻魚便當",
-   food2:"綠茶",
-   date:'2022-02-15',
-},
-{
-   name:"王大明",
-   food1:"雞腿便當",
-   food2:"西瓜牛奶",
-   date:'2022-02-16',
-}
+                        {
+                            food:"50",
+                            date:"2022-02-18",
+                            order:[
+                                {
+                                name:"李政翰",
+                                food:"排骨便當"
+                                },
+                                {
+                                name:"吳彥達",
+                                food:"鰻魚便當"
+                                },
+                                {
+                                name:"王大明",
+                                food:"雞腿便當"
+                                }
+                            ]
+                            }
+                        
+
                    ]
                }
            },
            methods:{
+                setfoodHandler:function(val)
+                {
+                    this.lists=this.lists.filter(item=>{ 
+                        if(item.date==val.date)  return false;
+                        else return true;  
+                    } );
+
+                    let userAry=[]
+                    this.userList.forEach(user => {
+                        userAry.push(
+                            JSON.parse(JSON.stringify(
+                                { 
+                                    "name":user.userName,
+                                    "food":""
+                                }
+                            ))
+                        )
+                    });
+
+                    this.lists.push(
+                    {
+                        "food":val.food,
+                        "url":val.url,
+                        "date":val.date,
+                        "order":userAry,
+                    }
+
+                    )
+                },
+
                 searchHandler:function (val)
                {
                     let assignedDate=val;

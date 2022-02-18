@@ -8,7 +8,8 @@ Vue.component("order-input-component",{
     template:`
     <div>
         <div>
-            指定日期輸入：<input type="date" id="assignDate"><button @click="AssignList()">查詢</button>
+            指定日期輸入：<input type="date" id="assignDate">
+            <button @click="AssignList()">查詢</button>
         </div>
         <div class="line"></div>
     </div>
