@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+   <div id="app">
+        <div class="container">
+            <nav-component @nav-info="navHandler" ></nav-component>
+
+            <div v-if="show==='order'">
+                <order-input-component @search-infor="searchHandler"></order-input-component>
+                <show-component :relist="relist"></show-component>
+            </div>
+            <div v-else-if="show==='set'">
+                ad123
+            </div>
+            <div v-else-if="show==='food-setting'">
+                <food-input-component @addlist="addListInfo"></food-input-component>
+                <food-setting-content-component :lists="foodList" @updateInfo="updateListInfo"></food-setting-content-component>
+            </div>
+            <div v-else-if="show==='users-setting'">
+                <users-input-component @adduserlist="adduserListInfo"></users-input-component>
+                <users-setting-content-component :lists="userList" ></users-setting-content-component>
+            </div>
+
+ 
+
+       </div>
+   </div>
+ 
+ 
+   <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js' integrity='sha512-pSyYzOKCLD2xoGM1GwkeHbdXgMRVsSqQaaUoHskx/HF09POwvow2VfVEdARIYwdeFLbu+2FCOTRYuiyeGxXkEg==' crossorigin='anonymous'></script>
+   <script src="js/nav-component.js"></script>
+   <script src="js/order-input-component.js" ></script>
+   <script src="js/show-component.js" ></script>
+   <script src="js/food-input-component.js"></script>
+   <script src="js/food-setting-content-component.js"></script>
+   <script src="js/users-input-component.js"></script>
+   <script src="js/users-setting-content-component.js"></script>
+   <script>
+     
+       let vm=new Vue({
+           el:"#app",
+           data(){
+               return{
+                    show:"order",
+                    relist:[],
+                    foodList:[],
+                    userList:[],
+                    lists:[
+ 
+{
+   name:"李政翰",
+   food1:"排骨便當",
+   food2:"珍珠奶茶",
+   date:'2022-02-16',
+},
+{
+   name:"吳彥達",
+   food1:"鰻魚便當",
+   food2:"綠茶",
+   date:'2022-02-15',
+},
+{
+   name:"王大明",
+   food1:"雞腿便當",
+   food2:"西瓜牛奶",
+   date:'2022-02-16',
+}
+                   ]
+               }
+           },
+           methods:{
+                searchHandler:function (val)
+               {
+                    let assignedDate=val;
+                    this.relist= this.lists.filter(element => {
+                        return element.date==assignedDate 
+                
+                   });
+               },
+               navHandler:function(val)
+               {
+                   this.show=val;
+               },
+
+                addListInfo : function (val)
+                {
+                    this.foodList.push(
+                        {
+                            "foodName":val.foodName,
+                            "foodUrl":val.foodUrl
+                        }
+                    )
+                }, 
+                adduserListInfo : function (val)
+                {
+                    this.userList.push(
+                        {
+                            "userName":val.userName,
+                        }
+                    )
+                },   
+                updateListInfo : function (val)
+                {
+                    this.foodList.push(
+                        {
+                            "foodName":val.foodName,
+                            "foodUrl":val.foodUrl
+                        }
+                    )
+                },  
+           },
+           computed:{
+
+           },
+           created(){
+
+           },
+           mounted(){
+
+
+           }
+       })
+   </script>
+</body>
+</html>
+ 
+ 
+ 
+

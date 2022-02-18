@@ -1,9 +1,8 @@
-Vue.component("content-component",{
+Vue.component("users-setting-content-component",{
     data:function(){
         return{
             editItem:null,
-            editFood:"",
-            editUrl:"",
+            editUser:"",
         }
     },
     props:["lists"],
@@ -13,8 +12,7 @@ Vue.component("content-component",{
             <li v-for="item of lists">
                 <template v-if="editItem==null">
                     <div>
-                        <span>{{item.foodName}}</span>
-                        <span>{{item.foodUrl}}</span>     
+                        <span>{{item.userName}}</span>
                         <button>刪除</button>
                         <button @click="editHandler(item)">修改</button> 
                     </div>
@@ -22,14 +20,12 @@ Vue.component("content-component",{
                 </template>
                 <template v-else-if="editItem!=item">
                     <div>
-                        <span>{{item.foodName}}</span>
-                        <span>{{item.foodUrl}}</span>      
+                        <span>{{item.userName}}</span>
                     </div>
                 </template>
                 <template v-else>
                     <div>
-                        <input type="text" v-model="editFood">
-                        <input type="text" v-model="editUrl">
+                        <input type="text" v-model="editUser">
                         <button @click="completeHandler(item)">完成</button>
                         <button @click="cancelHandler()">取消</button>
                     </div>
@@ -44,22 +40,19 @@ Vue.component("content-component",{
     methods:{
         editHandler:function(item){
             this.editItem=item;
-            this.editFood=item.foodName
-            this.editUrl=item.foodUrl
+            this.editUser=item.userName
         },
         cancelHandler:function()
         {
             this.editItem=null
-            this.editFood=""
-            this.editUrl=""
+            this.editUser=""
         },
         completeHandler:function(item)
         {
-            this.$emit("updateInfo",{ "foodName":this.editFood,"foodUrl":this.editUrl})
+            this.$emit("updateInfo",{ "userName":this.editUser})
 
             this.editItem=null
-            this.editFood=""
-            this.editUrl=""
+            this.editUser=""
         },
     }
 
