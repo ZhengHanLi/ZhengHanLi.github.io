@@ -14,6 +14,8 @@ Vue.component("users-input-component",{
     methods:{
         inputHandler:function()
         {
+            if( !this.name )
+                return
             this.$emit('adduserlist', { "userName":this.name}); 
             this.name="";
         }

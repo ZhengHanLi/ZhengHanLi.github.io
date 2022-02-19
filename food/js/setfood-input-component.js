@@ -1,17 +1,18 @@
 Vue.component("setfood-input-component",{
     data: function (){
         return{
-
+            selected:undefined,
         }
     },
     props:["foodlist"],
     template:`
     <div>
         <div>
-            <select name="" id="foodSel">
-                <option  v-for="food of foodlist " :value="food.foodUrl">{{food.foodName}}</option>
-            </select>
             <input type="date" id="assignDate">
+            <select name="" id="foodSel" v-model='selected'>
+                <option disabled value="">Please select one</option>
+                <option v-for="food of foodlist " :value="food">{{food.foodName}}</option>
+            </select>
             <button @click="inputHandler">新增</button>    
         </div>
         <div class="line"></div>
@@ -37,14 +38,15 @@ Vue.component("setfood-input-component",{
     },
     methods:{
         inputHandler:function(){
-            if( this.foodlist.length===0 )
+            if( this.foodlist.length===0 || !this.selected )
                 return false;
             let assignedDate=document.getElementById("assignDate").value
             let e = document.getElementById("foodSel");
             let food= e.options[e.selectedIndex].text;
             let url = e.value;
 
-            this.$emit("setfood-infor",{"food":food,"url":url,"date":assignedDate} )
+            this.$emit("setfood-infor",{"food":this.selected.foodName,"url":this.selected.foodUrl,"date":assignedDate} )
+            this.selected=undefined
         }
 
     }

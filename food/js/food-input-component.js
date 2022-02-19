@@ -16,8 +16,10 @@ Vue.component("food-input-component",{
     methods:{
         inputHandler:function()
         {
-            console.log("val")
+            if( !this.food || !this.url )
+                return;
             this.$emit('addlist', { "foodName":this.food,"foodUrl":this.url}); 
+            this.food=this.url=''
         }
     }
 

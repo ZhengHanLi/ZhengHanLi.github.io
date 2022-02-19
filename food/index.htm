@@ -13,21 +13,22 @@
         <div class="container">
             <nav-component @nav-info="navHandler" ></nav-component>
 
-            <div v-if="show==='order'">
+            <template v-if="show==='order'">
                 <order-input-component @search-infor="searchHandler"></order-input-component>
-                <order-content-component :relist="relist"></order-content-component>
-            </div>
-            <div v-else-if="show==='set'">
+                <order-content-component :lists="reducelist"></order-content-component>
+            </template>
+            <template v-else-if="show==='set'">
                 <setfood-input-component @setfood-infor="setfoodHandler"  :foodlist="foodList"></setfood-input-component>
-            </div>
-            <div v-else-if="show==='food-setting'">
+                <setfood-content-component :lists="setList" @delete-set="deleteSetHandler"></setfood-content-component>
+            </template>
+            <template v-else-if="show==='food-setting'">
                 <food-input-component @addlist="addListInfo"></food-input-component>
                 <food-setting-content-component :lists="foodList" @updateInfo="updateListInfo"></food-setting-content-component>
-            </div>
-            <div v-else-if="show==='users-setting'">
+            </template>
+            <template v-else-if="show==='users-setting'">
                 <users-input-component @adduserlist="adduserListInfo"></users-input-component>
                 <users-setting-content-component :lists="userList" ></users-setting-content-component>
-            </div>
+            </template>
 
  
 
@@ -45,6 +46,7 @@
    <script src="js/users-setting-content-component.js"></script>
 
    <script src="js/setfood-input-component.js"></script>
+   <script src="js/setfood-content-component.js"></script>
    <script>
      
        let vm=new Vue({
@@ -52,38 +54,30 @@
            data(){
                return{
                     show:"order",
-                    relist:[],
+                    reducelist:[{}],
+                    setList:[],
                     foodList:[],
                     userList:[],
-                    lists:[
-                        {
-                            food:"50",
-                            date:"2022-02-18",
-                            order:[
-                                {
-                                name:"李政翰",
-                                food:"排骨便當"
-                                },
-                                {
-                                name:"吳彥達",
-                                food:"鰻魚便當"
-                                },
-                                {
-                                name:"王大明",
-                                food:"雞腿便當"
-                                }
-                            ]
-                            }
-                        
-
-                   ]
+                    lists:[{}]
                }
            },
            methods:{
+               deleteSetHandler:function(val)
+               {
+                    this.setList=this.setList.filter(item=>{ 
+                        if(item.foodDate==val.foodDate)  return false;
+                        else return true;  
+                    } );
+               },
                 setfoodHandler:function(val)
                 {
                     this.lists=this.lists.filter(item=>{ 
                         if(item.date==val.date)  return false;
+                        else return true;  
+                    } );
+
+                    this.setList=this.setList.filter(item=>{ 
+                        if(item.foodDate==val.date)  return false;
                         else return true;  
                     } );
 
@@ -99,6 +93,15 @@
                         )
                     });
 
+                    this.setList.push(
+                        {
+                            "foodDate":val.date,
+                            "foodName":val.food,
+                        }
+
+                    )
+
+
                     this.lists.push(
                     {
                         "food":val.food,
@@ -113,7 +116,7 @@
                 searchHandler:function (val)
                {
                     let assignedDate=val;
-                    this.relist= this.lists.filter(element => {
+                    this.reducelist= this.lists.filter(element => {
                         return element.date==assignedDate 
                 
                    });
