@@ -55,7 +55,36 @@ export default new Vuex.Store({
     designatedDate(state,data)
     {
       state.designatedDate=data
+    },
+    UpdateUserInfo(state,data)
+    {
+      let index=data.id;
+      let userName=data.userName;
+      state.userList[index]={"userName":userName}
+    },
+    DeleteUserInfo(state,data)
+    {
+
+      state.userList.splice(data,1)
+    },
+    UpdateFoodInfo(state,data)
+    {
+      let index=data.id;
+      let foodName=data.foodName;
+      let foodUrl=data.foodUrl;
+      state.foodList[index]={"foodName":foodName,"foodUrl":foodUrl}
+    },
+    DeleteFoodInfo(state,data)
+    {
+
+      state.foodList.splice(data,1)
+    },
+    DeleteSetFoodInfo(state,data)
+    {
+
+      state.setList.splice(data,1)
     }
+
   },
   actions: {
   },

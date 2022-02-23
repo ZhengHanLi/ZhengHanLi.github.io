@@ -1,18 +1,16 @@
 
 <template>
-    <div>
-        <div>
-            <div>
-                <input type="date" id="assignDate">
-                <select name="" id="foodSel" v-model='selected'>
-                    <option disabled value="">Please select one</option>
-                    <option v-for="(food,index) of Get_FoodList " :value="food" :key="index">{{food.foodName}}</option>
-                </select>
-                <button @click="inputHandler">新增</button>    
-            </div>
-            <div class="line"></div>
-        </div> 
 
+    <div class="setFoodContent">
+        <div>
+            <input type="date" id="assignDate">
+            <select name="" id="foodSel" v-model='selected'>
+                <option disabled value="">Please select one</option>
+                <option v-for="(food,index) of Get_FoodList " :value="food" :key="index">{{food.foodName}}</option>
+            </select>
+            <button @click="inputHandler">新增</button>    
+        </div>
+        <div class="line"></div>
 
         <div class="content">
             <ul>
@@ -21,13 +19,13 @@
                     <div>
                         <span>{{item.foodDate}}</span>
                         <span>{{item.foodName}}</span>
-                        <button @click="deleteSet(item)" >刪除</button>
+                        <button @click="deleteHandler(index)" >刪除</button>
                     </div>
                 </li>
             </ul>
         </div>
-        
-    </div>
+    </div> 
+
 </template>
 
 <script>
@@ -62,7 +60,8 @@
             }
         },
         methods:{
-            inputHandler:function(){
+            inputHandler()
+            {
                 if( !this.selected )
                     return false;
                 let assignedDate=document.getElementById("assignDate").value
@@ -83,6 +82,11 @@
                 this.$store.commit('Add_OrderList',{"foodName":this.selected.foodName,"foodUrl":this.selected.foodUrl,"foodDate":assignedDate,"userList":userAry })
                 this.selected=undefined
 
+            },
+            deleteHandler(index)
+            {
+                if( !confirm("確定要刪除?")) return
+                this.$store.commit("DeleteSetFoodInfo",index )
             }
 
         }
@@ -90,6 +94,29 @@
     }
 </script>
 
-<style>
+<style scoped>
+    .setFoodContent{
+        margin: 10px auto;
+        max-width: 1440px;
+    }
+
+    ul span,
+    ul input
+    {
+        display: inline-block;
+        width: 150px;
+    }
+
+    ul button{
+        display: inline-block;
+    }
+
+    ul button{
+        border-radius: 100px;
+    }
+
+    ul li{
+        padding: 5px;
+    }
 
 </style>

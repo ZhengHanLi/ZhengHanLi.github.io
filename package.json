@@ -1,7 +1,6 @@
 {
   "name": "zhenghanli.github.io",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,5 +14,6 @@
   "bugs": {
     "url": "https://github.com/zhenghanli/zhenghanli.github.io/issues"
   },
-  "homepage": "https://github.com/zhenghanli/zhenghanli.github.io#readme"
+  "homepage": "https://github.com/zhenghanli/zhenghanli.github.io#readme",
+  "description": ""
 }
