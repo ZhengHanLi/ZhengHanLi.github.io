@@ -5,18 +5,19 @@
                 指定日期輸入：<input type="date" id="assignDate">
                 <button @click="AssignList()">查詢</button>
             </div>
-            <div class="line"></div>
-
 
             <div class="storeInfo">
                 店名:{{Get_OrderList[0].foodName}}  網址:<a :href="Get_OrderList[0].foodUrl" target="_blank">{{Get_OrderList[0].foodUrl}}</a>  
             </div>
-            <div class='title1'>
-                姓名
+            <div class='titleInfo'>
+                <div class='title1'>
+                    姓名
+                </div>
+                <div class='title2'>
+                    食物
+                </div>
             </div>
-            <div class='title2'>
-                食物
-            </div>
+
 
             <div class='userSet' v-for="(item,index) of Get_OrderList[0].userList" :key="index">
                 <div class='foodvalue1'>
@@ -82,22 +83,30 @@
     border-bottom: 2px solid;
 }
 
-.foodContent .title1{
+.titleInfo{
+    width: 100%;
+    box-sizing: content-box;
+    display: flex;
+}
+
+.titleInfo .title1{
     border-right: 1px solid;
 }
 
-.foodContent .title1,
-.foodContent .title2{
-    width: 49%;
+.titleInfo .title1,
+.titleInfo .title2{
+    width: 50%;
     text-align: center;
-    display: inline-block;
-    background-color: rgb(3, 3, 3);
+    background-color: rgb(73, 70, 70);
     color: #fff;
 }
 
 .userSet{
     margin-bottom: 8px;
+    display: flex;
 }
+
+
 
 .userSet:nth-child(even){
     /* background-color: rgb(189, 183, 183); */
@@ -108,22 +117,20 @@
 }
 
 .userSet .foodvalue1{
-    width: 49%;
+    width: 50%;
     text-align: center;
-    display: inline-block;
     /* border: 1px solid; */
 }
 
 
 .userSet .foodvalue2{
-    width: 49%;
+    width: 50%;
     text-align: left;
-    display: inline-block;
-     padding-left: 5px;
+    padding-left: 25px;
 }
 
 .userSet .foodvalue2 input{
-    width: 90%;
+    width: 95%;
    
     border-radius: 7px;
 }
