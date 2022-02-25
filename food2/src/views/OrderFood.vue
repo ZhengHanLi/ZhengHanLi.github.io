@@ -7,24 +7,27 @@
             </div>
             <div class="line"></div>
 
-            <table>
-                <caption>
-                    <span>店名:{{Get_OrderList[0].foodName}}</span>
-                    <span>網址:<a :href="Get_OrderList[0].foodUrl" target="_blank">{{Get_OrderList[0].foodUrl}}</a>  </span>
-                </caption>
-                <thead>
-                    <tr>
-                        <th>姓名</th>
-                        <th>食物</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(item,index) of Get_OrderList[0].userList" :key="index">
-                        <td>{{item.userName}}</td>
-                        <td><input type="text" v-model="item.userFood" ></td>
-                    </tr>
-                </tbody>
-            </table>
+
+            <div class="storeInfo">
+                店名:{{Get_OrderList[0].foodName}}  網址:<a :href="Get_OrderList[0].foodUrl" target="_blank">{{Get_OrderList[0].foodUrl}}</a>  
+            </div>
+            <div class='title1'>
+                姓名
+            </div>
+            <div class='title2'>
+                食物
+            </div>
+
+            <div class='userSet' v-for="(item,index) of Get_OrderList[0].userList" :key="index">
+                <div class='foodvalue1'>
+                    {{item.userName}}
+                </div>
+                <div class='foodvalue2'>
+                    <input type="text" v-model="item.userFood" >
+                </div>
+            </div>
+
+
 
 
 
@@ -74,23 +77,55 @@
     max-width: 1440px;
 }
 
-table{
-    margin-top: 10px;
-    width:100%;
-    
-}
-
-table td{
+.foodContent .storeInfo{
     text-align: center;
-    
+    border-bottom: 2px solid;
 }
 
-table caption {
-    border-bottom: 2px solid #000;
+.foodContent .title1{
+    border-right: 1px solid;
 }
 
-table caption span{
-    margin: 20px;
+.foodContent .title1,
+.foodContent .title2{
+    width: 49%;
+    text-align: center;
+    display: inline-block;
+    background-color: rgb(3, 3, 3);
+    color: #fff;
+}
+
+.userSet{
+    margin-bottom: 8px;
+}
+
+.userSet:nth-child(even){
+    /* background-color: rgb(189, 183, 183); */
+}
+
+.userSet:nth-child(odd){
+    background-color: rgb(211, 203, 203);
+}
+
+.userSet .foodvalue1{
+    width: 49%;
+    text-align: center;
+    display: inline-block;
+    /* border: 1px solid; */
+}
+
+
+.userSet .foodvalue2{
+    width: 49%;
+    text-align: left;
+    display: inline-block;
+     padding-left: 5px;
+}
+
+.userSet .foodvalue2 input{
+    width: 90%;
+   
+    border-radius: 7px;
 }
 
 </style>
