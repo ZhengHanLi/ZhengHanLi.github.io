@@ -74,7 +74,8 @@
                         JSON.parse(JSON.stringify(
                             { 
                                 "userName":user.userName,
-                                "userFood":""
+                                "userFood":"",
+                                "foodDate":assignedDate
                             }
                         ))
                     )
